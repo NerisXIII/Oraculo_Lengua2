@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consejo del Día 🤣</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: linear-gradient(45deg, #ffeb3b, #ff9800);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            transition: background 1s ease;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in-out;
+            transition: background 1s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 400px;
+            justify-content: space-between;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        #frase {
+            font-size: 2.2em;
+            font-weight: bold;
+            margin: 20px 0;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border: none;
+            background: #ff5722;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+            margin: 5px;
+        }
+        button:hover {
+            transform: scale(1.1) rotate(-3deg);
+            background: #e64a19;
+        }
+            #bloqueo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            z-index: 9999;
+            text-align: center;
+            padding: 20px;
+            line-height: 1.4;
+            overflow-y: auto;
+            box-sizing: border-box;
+            z-index: 9999;
+            text-align: center;
+            padding: 20px;
+        }
+
+        body.bloqueado *:not(#bloqueo):not(#bloqueo *):not(button) {
+            pointer-events: none;
+            user-select: none;
+            filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <h1>💡 ¡Tu Consejo del Día! 💡</h1>
+    <div class="container" id="contenedor">
+        <p id="frase">Presiona el botón para recibir un consejo 🤪</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+            <button onclick="mostrarFrase()">¡Quiero mi consejo del día! 🎉</button>
+            <button onclick="modoExtremo()" style="background: #8e24aa;">¡Consejo Extremo! 🔥</button>
+        </div>
+        <p class="contador">Consejos recibidos: <span id="contador">0</span></p>
+    </div>
+    <div id="bloqueo">
+    <p id="mensaje-bloqueo"></p>
+</div>
+
+<script>
+    const frases = [
+        "Piruletas! 🍭",
+        "A tomar los huevos! 🥚😂",
+        "Donde manda capitán, no manda marinero. ⚓️",
+        "Hacha pequeña. 🪓",
+        "Fuego. 🔥",
+        "Pa comer rodaballo hai que mollar o carallo. 🐟🤣",
+        "Hecha la dilución, hecha la solución. 🧪",
+        "Melchor, gaspar y Prodemar... 👑🐟",
+        "Es lo que hay... 🤷‍♂️",
+        "Menos es más. ➖➕",
+        "A machete. 🔪",
+        "Tudo dentro! 🇵🇹🎉"
+    ];
+
+    let frasesDisponibles = [...frases];
+    let contador = 0;
+
+    function mostrarFrase() {
+        document.body.style.background = "linear-gradient(45deg, #ffeb3b, #ff9800)";
+        const contenedor = document.getElementById("contenedor");
+        contenedor.style.background = "white";
+        const fraseElemento = document.getElementById("frase");
+        fraseElemento.style.color = "#333";
+
+        if (frasesDisponibles.length === 0) frasesDisponibles = [...frases];
+        const index = Math.floor(Math.random() * frasesDisponibles.length);
+        const nuevaFrase = frasesDisponibles.splice(index, 1)[0];
+        fraseElemento.innerHTML = nuevaFrase;
+
+        contador++;
+        document.querySelector(".contador span").textContent = contador;
+
+        if (contador >= 5) {
+    const mensajesBloqueo = [
+        "Has bebido de la fuente del conocimiento... pero para el río completo, suscríbete al curso de NKS.",
+        "El universo te susurra: es hora de ir más allá. El curso de NKS te espera.",
+        "Los sabios también estudian. ¿Y tú? Suscríbete al curso de NKS.",
+        "Ya has saboreado el misterio. El resto del festín está en el curso de NKS.",
+        "Tu sed de sabiduría ha desbloqueado la puerta. ¿La cruzas? Suscríbete al curso de NKS.",
+        "El conocimiento no tiene fin, pero sí suscripción. Contacta al curso de NKS"
+    ];
+    const mensaje = mensajesBloqueo[Math.floor(Math.random() * mensajesBloqueo.length)];
+    document.getElementById("mensaje-bloqueo").innerHTML = mensaje;
+    const bloqueo = document.getElementById("bloqueo");
+    bloqueo.style.display = "flex";
+    document.body.classList.add("bloqueado");
+    document.querySelectorAll("button").forEach(btn => btn.disabled = true);
+}
+    }
+
+    function modoExtremo() {
+        const fraseElemento = document.getElementById("frase");
+        const contenedor = document.getElementById("contenedor");
+        let cuenta = 5;
+        const cuentaElemento = document.createElement("p");
+        cuentaElemento.style.position = "absolute";
+        cuentaElemento.style.top = "30%";
+        cuentaElemento.style.left = "50%";
+        cuentaElemento.style.transform = "translateX(-50%)";
+        cuentaElemento.style.zIndex = "10000";
+        cuentaElemento.id = "cuenta-atras";
+        cuentaElemento.style.fontSize = "3em";
+        cuentaElemento.style.fontWeight = "bold";
+        cuentaElemento.style.color = "red";
+        cuentaElemento.innerHTML = cuenta;
+        contenedor.appendChild(cuentaElemento);
+
+        const interval = setInterval(() => {
+            cuenta--;
+            cuentaElemento.innerHTML = cuenta;
+            if (cuenta < 0) {
+                clearInterval(interval);
+                cuentaElemento.remove();
+                document.body.style.background = "black";
+                contenedor.style.background = "black";
+                fraseElemento.style.color = 'white';
+                fraseElemento.innerHTML = '<span style="font-size: 4em; color: red;">💀</span><br><span style="font-size: 1.5em; font-weight: bold;">Apaga y vámonos...</span>';
+            }
+        }, 1000);
+    }
+</script>
+    <div id="bloqueo">
+        <p>Para seguir acumulando sabiduría,<br><strong>suscríbete al curso de NKS</strong>.</p>
+    </div>
+</body>
+</html>
